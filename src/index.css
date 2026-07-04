@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #009be3;
+  --color-primary-glow: rgba(0, 155, 227, 0.15);
+  --color-bg-deep: #02162e;
+  --color-card-bg: rgba(3, 33, 69, 0.7);
+  --color-text-muted: #6ca7cc;
+  
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sora: "Sora", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float-delayed 8s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-twinkle: twinkle 3s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 25s linear infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+  }
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(12px) rotate(-1.5deg); }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.85; }
+  }
+  @keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+/* Custom Base Layer & Global Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #02162e;
+    color: #ffffff;
+    cursor: none; /* Hide default cursor to use our custom high-fidelity cursor */
+  }
+
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+  
+  /* Selection colors matching the theme */
+  ::selection {
+    background-color: rgba(0, 155, 227, 0.3);
+    color: #ffffff;
+  }
+
+  /* Custom high-performance scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #021226;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 155, 227, 0.3);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 155, 227, 0.6);
+  }
+}
+
+/* High-fidelity Glassmorphic Classes */
+.glass-panel {
+  background: rgba(3, 33, 69, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 155, 227, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover {
+  will-change: transform, border-color, box-shadow;
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(0, 155, 227, 0.45);
+  box-shadow: 0 15px 45px -5px rgba(0, 155, 227, 0.15), 0 0 15px 0 rgba(0, 155, 227, 0.05);
+  background: rgba(3, 33, 69, 0.85);
+}
+
+.glass-panel-active {
+  border-color: rgba(0, 155, 227, 0.8);
+  box-shadow: 0 0 30px rgba(0, 155, 227, 0.3);
+  background: rgba(3, 33, 69, 0.9);
+}
+
+/* Accent Glow */
+.accent-glow {
+  box-shadow: 0 0 15px #009be3;
+}
+
+/* Interactive Glowing Accents */
+.cyan-glow-text {
+  text-shadow: 0 0 12px rgba(0, 155, 227, 0.6);
+}
+
+.cyan-glow-border {
+  box-shadow: inset 0 0 12px rgba(0, 155, 227, 0.2);
+}
+
+/* 3D Perspective and Card Hover Classes */
+.perspective-container {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.depth-card {
+  transition: transform 0.25s ease-out, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Starfield Generator Background */
+.space-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  background: radial-gradient(circle at 50% 50%, #031e3d 0%, #02162e 70%, #000c1c 100%);
+  overflow: hidden;
+}
+
+.nebula-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Custom terminal scanline & glow */
+.terminal-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-screen::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+}
+
+/* Hologram locked state scanlines */
+.hologram-scan {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 155, 227, 0) 0%,
+    rgba(0, 155, 227, 0.08) 10%,
+    rgba(0, 155, 227, 0.2) 20%,
+    rgba(0, 155, 227, 0.08) 30%,
+    rgba(0, 155, 227, 0) 40%
+  );
+  background-size: 100% 200px;
+  animation: scanlines 4s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { background-position: 0px -200px; }
+  100% { background-position: 0px 800px; }
+}
+
+/* Hide cursor on touch devices to avoid lagging elements */
+@media (max-width: 1024px) {
+  html {
+    cursor: auto;
+  }
+}
+
+/* Premium iOS Bottom Navigation Bar for Mobile and Tablets */
+@media (max-width: 767px) {
+  /* Hide the traditional top navbar completely on mobile/tablet */
+  header {
+    display: none !important;
+  }
+
+  /* Bottom nav container with premium iOS glassmorphism style */
+  .mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 64px;
+    z-index: 9999;
+    background: rgba(10, 15, 30, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0, 155, 227, 0.2);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+    /* Safe rendering: force iOS & mobile hardware-accelerated fixed placement */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Nav item button representing real mobile app button */
+  .mobile-bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    color: #8f9cae;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* iOS native pressing active/scale feedback */
+  .mobile-bottom-nav-item:active {
+    transform: scale(0.92);
+  }
+
+  /* Highlight state for active section link */
+  .mobile-bottom-nav-item.active {
+    color: #009be3;
+  }
+
+  /* Active glow dot indicator below the icon */
+  .mobile-bottom-nav-item.active .icon-container {
+    position: relative;
+  }
+  
+  .mobile-bottom-nav-item.active .icon-container::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #009be3;
+    box-shadow: 0 0 8px #009be3;
+  }
+
+  /* App icon styling */
+  .mobile-bottom-nav-icon {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 2px;
+    transition: transform 0.2s ease;
+  }
+
+  /* Micro-label styling */
+  .mobile-bottom-nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    letter-spacing: 0.02em;
+  }
+  
+  /* Add padding-bottom to body to ensure no content is cut off or hidden by bottom bar */
+  body {
+    padding-bottom: 74px !important;
+  }
+
+  /* Adjust floating back-to-top button position to avoid overlay issues on mobile */
+  button[title="Smooth Back To Top Node"] {
+    bottom: 80px !important;
+    right: 16px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+
+/* Ensure mobile bottom nav is completely hidden on desktop */
+@media (min-width: 768px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}

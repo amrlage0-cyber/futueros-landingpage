@@ -1,0 +1,6 @@
+{
+  "name": "Futueros Portfolio",
+  "description": "High-end 3D portfolio landing page for Futueros, featuring glassmorphism, interactive layouts, cyber-aesthetic widgets, and dual-channel message routing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
